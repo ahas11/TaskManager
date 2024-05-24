@@ -149,7 +149,6 @@ const dashboard = () => {
     );
 
   const totals = data?.tasks;
-  console.log(data)
 
   const stats = [
     {

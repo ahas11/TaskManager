@@ -106,21 +106,13 @@ export const getTeamList = async (req, res) => {
 
 export const getNotificationsList = async (req, res) => {
   try {
-    console.log("Request User:", req.user); // Log user details
     const { userId } = req.user;
 
-    // Ensure userId is correct
     if (!userId) {
       return res
         .status(400)
         .json({ status: false, message: "User ID not found" });
     }
-
-    // Log the query criteria
-    console.log("Query Criteria:", {
-      team: userId,
-      isRead: { $nin: [userId] },
-    });
 
     const notice = await Notice.find({
       team: userId,

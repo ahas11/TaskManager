@@ -25,19 +25,8 @@ const NotificationPanel = () => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
 
-  const {data, refetch, isLoading} = useGetNotificationsQuery();
+  const {data, refetch} = useGetNotificationsQuery();
   const [markAsRead] = useMarkNotifAsReadMutation();
-
-  console.log(data)
-
-  if (isLoading)
-    return (
-      <div className="py-10">
-        <Loading />
-      </div>
-    );
-
-  console.log(data);
 
   const viewHandler = async (el) => {
     setSelected(el);

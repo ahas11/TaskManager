@@ -15,7 +15,9 @@ export const createTask = async (req, res) => {
 
     text =
       text +
-      ` The task priority is set a ${priority} priority, so check and act accordingly. The task date is ${new Date(date).toDateString()}. Thank you!!!`;
+      ` The task priority is set a ${priority} priority, so check and act accordingly. The task date is ${new Date(
+        date
+      ).toDateString()}. Thank you!!!`;
 
     const activity = {
       type: "assigned",
@@ -75,7 +77,8 @@ export const duplicateTask = async (req, res) => {
 
     text =
       text +
-      ` The task priority is set a ${task.priority
+      ` The task priority is set a ${
+        task.priority
       } priority, so check and act accordingly. The task date is ${task.date.toDateString()}. Thank you!!!`;
 
     await Notice.create({
@@ -104,7 +107,7 @@ export const postTaskActivity = async (req, res) => {
       activity,
       by: userId,
     };
-    console.log(task)
+    console.log(task);
     task.activities.push(data);
 
     await task.save();
@@ -124,22 +127,22 @@ export const dashboardStatistics = async (req, res) => {
 
     const allTasks = isAdmin
       ? await Task.find({
-        isTrashed: false,
-      })
-        .populate({
-          path: "team",
-          select: "name role title email",
+          isTrashed: false,
         })
-        .sort({ _id: -1 })
+          .populate({
+            path: "team",
+            select: "name role title email",
+          })
+          .sort({ _id: -1 })
       : await Task.find({
-        isTrashed: false,
-        team: { $all: [userId] },
-      })
-        .populate({
-          path: "team",
-          select: "name role title email",
+          isTrashed: false,
+          team: { $all: [userId] },
         })
-        .sort({ _id: -1 });
+          .populate({
+            path: "team",
+            select: "name role title email",
+          })
+          .sort({ _id: -1 });
 
     const users = await User.find({ isActive: true })
       .select("name title role isAdmin createdAt")
@@ -279,10 +282,12 @@ export const updateTask = async (req, res) => {
 
     const task = await Task.findById(id);
 
-    console.log(task)
+    console.log(task);
 
     if (!task) {
-      return res.status(404).json({ status: false, message: "Task not found." });
+      return res
+        .status(404)
+        .json({ status: false, message: "Task not found." });
     }
 
     task.title = title;
