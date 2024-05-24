@@ -48,15 +48,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
-    userAction: builder.mutation({
-      query: (data) => ({
-        url: `${USER_URL}/${data.id}`,
-        method: "PUT",
-        body: data,
-        credentials: "include",
-      }),
-    }),
-
     markNotifAsRead: builder.mutation({
       query: (data) => ({
         url: `${USER_URL}/read-noti?isReadType=${data.type}&id=${data?.id}`,

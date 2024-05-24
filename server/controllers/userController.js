@@ -106,16 +106,33 @@ export const getTeamList = async (req, res) => {
 
 export const getNotificationsList = async (req, res) => {
   try {
+    console.log("Request User:", req.user); // Log user details
     const { userId } = req.user;
+
+    // Ensure userId is correct
+    if (!userId) {
+      return res
+        .status(400)
+        .json({ status: false, message: "User ID not found" });
+    }
+
+    // Log the query criteria
+    console.log("Query Criteria:", {
+      team: userId,
+      isRead: { $nin: [userId] },
+    });
 
     const notice = await Notice.find({
       team: userId,
       isRead: { $nin: [userId] },
     }).populate("task", "title");
 
+    // Log the results of the query
+    console.log("Notice Data:", notice);
+
     res.status(201).json(notice);
   } catch (error) {
-    console.log(error);
+    console.log("Error in getNotificationsList:", error);
     return res.status(400).json({ status: false, message: error.message });
   }
 };

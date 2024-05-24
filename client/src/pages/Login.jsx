@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import Textbox from '../components/Textbox';
@@ -23,6 +23,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const [login, { isLoading }] = useLoginMutation();
+  console.log(user)
 
   const submitHandler = async (data) => {
     try {
@@ -36,7 +37,7 @@ const Login = () => {
 
   useEffect(() => {
     user && navigate("/dashboard");
-  }, [user]);
+  }, [user, navigate]);
   return (
     <div className="w-full min-h-screen flex items-center justify-center flex-col lg:flex-row bg-[#f3f4f6]">
       <div className="w-full md:w-auto flex gap-0 md:gap-40 flex-col md:flex-row items-center justify-center">

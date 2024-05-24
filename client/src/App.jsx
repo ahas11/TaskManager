@@ -17,7 +17,7 @@ import clsx from "clsx"
 
 
 function Layout() {
-  const { user } = useSelector((state) => state.auth.user);
+  const { user } = useSelector((state) => state.auth);
 
   const location = useLocation();
   return user ? (

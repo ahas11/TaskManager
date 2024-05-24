@@ -1,7 +1,17 @@
 import express from "express";
-import { activateUserProfile, changeUserPassword, deleteUserProfile, getNotificationsList, getTeamList, loginUser, logoutUser, markNotificationRead, registerUser, updateUserProfile } from "../controllers/userController.js";
+import {
+  activateUserProfile,
+  changeUserPassword,
+  deleteUserProfile,
+  getNotificationsList,
+  getTeamList,
+  loginUser,
+  logoutUser,
+  markNotificationRead,
+  registerUser,
+  updateUserProfile,
+} from "../controllers/userController.js";
 import { isAdminRoute, protectRoute } from "../middleware/authMiddleware.js";
-
 
 const router = express.Router();
 
@@ -21,6 +31,5 @@ router
   .route("/:id")
   .put(protectRoute, isAdminRoute, activateUserProfile)
   .delete(protectRoute, isAdminRoute, deleteUserProfile);
-
 
 export default router;
