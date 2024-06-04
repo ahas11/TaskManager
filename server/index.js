@@ -17,14 +17,19 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001", "https://project-mern-taskmanager.netlify.app"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://project-mern-taskmanager.netlify.app",
+    ],
     methods: ["GET", "POST", "DELETE", "PUT"],
-    credentials: true,
+    credentials: true, // Ensure cookies are allowed
   })
 );
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(cookieParser());
 
 app.use(morgan("dev"));
