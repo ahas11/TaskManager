@@ -1,15 +1,10 @@
+import { FaArrowsToDot } from "react-icons/fa6";
+import React from "react";
 import clsx from "clsx";
 import moment from "moment";
-import React from "react";
 import { FaNewspaper } from "react-icons/fa";
-import { FaArrowsToDot } from "react-icons/fa6";
 import { LuClipboardEdit } from "react-icons/lu";
-import {
-  MdAdminPanelSettings,
-  MdKeyboardArrowDown,
-  MdKeyboardArrowUp,
-  MdKeyboardDoubleArrowUp,
-} from "react-icons/md";
+import { MdAdminPanelSettings, MdKeyboardArrowDown, MdKeyboardArrowUp, MdKeyboardDoubleArrowUp } from "react-icons/md";
 import Chart from "../components/Chart";
 import Loading from "../components/Loader";
 import UserInfo from "../components/UserInfo";
@@ -21,7 +16,7 @@ const TaskTable = ({ tasks }) => {
     high: <MdKeyboardDoubleArrowUp />,
     medium: <MdKeyboardArrowUp />,
     low: <MdKeyboardArrowDown />,
-  }
+  };
 
   const TableHeader = () => (
     <thead className='border-b border-gray-300 '>
@@ -45,7 +40,7 @@ const TaskTable = ({ tasks }) => {
       <td className="py-2">
         <div className="flex gap-1 items-center">
           <span className={clsx("text-lg", PRIOTITYSTYLES[task.priority])}>{ICONS[task.priority]}</span>
-          <span className="capitalize"> </span>
+          <span className="capitalize">{task.priority}</span>
         </div>
       </td>
       <td className="py-2">
@@ -67,23 +62,20 @@ const TaskTable = ({ tasks }) => {
     </tr>
   );
 
-
   return (
-    <>
-      <div className="w-full md:w-2/3 bg-white px-2 md:px-4 pt-4 pb-4 rounded shadow-md">
-        <table className="w-full">
-          <TableHeader />
-          <tbody>
-            {
-              tasks?.map((task, id) => (
-                <TableRow key={id} task={task} />
-              ))}
-          </tbody>
-        </table>
-      </div>
-    </>
+    <div className="w-full md:w-2/3 bg-white px-2 md:px-4 pt-4 pb-4 rounded shadow-md">
+      <table className="w-full">
+        <TableHeader />
+        <tbody>
+          {tasks?.map((task, id) => (
+            <TableRow key={id} task={task} />
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
-}
+};
+
 const UserTable = ({ users }) => {
   const TableHeader = () => (
     <thead className='border-b border-gray-300'>
@@ -102,21 +94,14 @@ const UserTable = ({ users }) => {
           <div className='w-9 h-9 rounded-full text-white flex items-center justify-center text-sm bg-violet-700'>
             <span className='text-center'>{getInitials(user?.name)}</span>
           </div>
-
           <div>
-            <p> {user.name}</p>
+            <p>{user.name}</p>
             <span className='text-xs text-black'>{user?.role}</span>
           </div>
         </div>
       </td>
-
       <td>
-        <p
-          className={clsx(
-            "w-fit px-3 py-1 rounded-full text-sm",
-            user?.isActive ? "bg-blue-200" : "bg-yellow-100"
-          )}
-        >
+        <p className={clsx("w-fit px-3 py-1 rounded-full text-sm", user?.isActive ? "bg-blue-200" : "bg-yellow-100")}>
           {user?.isActive ? "Active" : "Disabled"}
         </p>
       </td>
@@ -136,19 +121,26 @@ const UserTable = ({ users }) => {
       </table>
     </div>
   );
+};
 
-}
 const dashboard = () => {
   const { data, isLoading, error } = useGetDasboardStatsQuery();
+  
+  console.log('Fetched Data:', data); // Log the fetched data for debugging
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="py-10">
         <Loading />
       </div>
     );
+  }
 
-  const totals = data?.tasks;
+  if (error) {
+    return <div>Error: {error.message}</div>; // Handle the error
+  }
+
+  const totals = data?.tasks || {}; // Ensure totals is an object
 
   const stats = [
     {
@@ -160,14 +152,14 @@ const dashboard = () => {
     },
     {
       _id: "2",
-      label: "COMPLTED TASK",
+      label: "COMPLETED TASK",
       total: totals["Completed"] || 0,
       icon: <MdAdminPanelSettings />,
       bg: "bg-[#0f766e]",
     },
     {
       _id: "3",
-      label: "TASK IN PROGRESS ",
+      label: "TASK IN PROGRESS",
       total: totals["in progress"] || 0,
       icon: <LuClipboardEdit />,
       bg: "bg-[#f59e0b]",
@@ -175,11 +167,12 @@ const dashboard = () => {
     {
       _id: "4",
       label: "TODOS",
-      total: totals["todo"],
+      total: totals["todo"] || 0,
       icon: <FaArrowsToDot />,
-      bg: "bg-[#be185d]" || 0,
+      bg: "bg-[#be185d]",
     },
   ];
+
   const Card = ({ label, count, bg, icon }) => {
     return (
       <div className='w-full h-32 bg-white p-5 shadow-md rounded-md flex items-center justify-between'>
@@ -192,33 +185,26 @@ const dashboard = () => {
           {icon}
         </div>
       </div>
-
-    )
-  }
+    );
+  };
 
   return (
-    <div className="h-full py-4 ">
+    <div className="h-full py-4">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-        {
-          stats.map(({ icon, bg, label, total }, index) => (
-            <Card key={index} icon={icon} bg={bg} label={label} count={total} />
-          ))}
+        {stats.map(({ icon, bg, label, total }, index) => (
+          <Card key={index} icon={icon} bg={bg} label={label} count={total} />
+        ))}
       </div>
       <div className="w-full bg-white my-16 p-4 rounded shadow-sm">
         <h4 className="text-xl text-gray-600 font-semibold">Chart by priority</h4>
-        <Chart data={data?.graphData} />
+        <Chart data={data?.graphData || []} /> {/* Ensure data is not undefined */}
       </div>
-
       <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
-        {/*left*/}
-
-        <TaskTable tasks={data?.last10Task} />
-
-        {/*right*/}
-        <UserTable users={data?.users} />
+        <TaskTable tasks={data?.last10Task || []} /> {/* Ensure data is not undefined */}
+        <UserTable users={data?.users || []} /> {/* Ensure data is not undefined */}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default dashboard
+export default dashboard;

@@ -23,7 +23,6 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const [login, { isLoading }] = useLoginMutation();
-  console.log(user)
 
   const submitHandler = async (data) => {
     try {
