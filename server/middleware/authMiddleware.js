@@ -1,46 +1,38 @@
+import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 
-const protectRoute = async (req, res, next) => {
-  console.log("protectRoute middleware called"); // Add this log
-  try {
-    let token = req.cookies?.token;
-    console.log("Token:", token); // Log the token
+const protectRoute = asyncHandler(async (req, res, next) => {
+  let token = req.cookies.token;
+  console.log(token)
 
-    if (token) {
+  if (token) {
+    try {
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-      console.log("Decoded Token:", decodedToken); // Log the decoded token
-
-      const user = await User.findById(decodedToken.userID).select(
+      console.log(decodedToken)
+      const resp = await User.findById(decodedToken.userId).select(
         "isAdmin email"
       );
-      console.log("User Response:", user); // Log the user response
-
-      if (!user) {
-        return res
-          .status(404)
-          .json({ status: false, message: "User not found" });
-      }
 
       req.user = {
-        email: user.email,
-        isAdmin: user.isAdmin,
+        email: resp.email,
+        isAdmin: resp.isAdmin,
         userID: decodedToken.userID,
       };
 
       next();
-    } else {
+    } catch (error) {
+      console.error(error);
       return res
         .status(401)
         .json({ status: false, message: "Not authorized. Try login again." });
     }
-  } catch (error) {
-    console.error("Protect Route Error:", error); // Improved error logging
+  } else {
     return res
       .status(401)
       .json({ status: false, message: "Not authorized. Try login again." });
   }
-};
+});
 
 const isAdminRoute = (req, res, next) => {
   if (req.user && req.user.isAdmin) {

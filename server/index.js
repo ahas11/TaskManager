@@ -20,7 +20,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:3001",
-      "https://project-mern-taskmanager.netlify.app",
+      "https://ataskmanager.netlify.app",
     ],
     methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true, // Ensure cookies are allowed
