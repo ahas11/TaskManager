@@ -59,14 +59,11 @@ export const loginUser = async (req, res) => {
         message: "User account has been deactivated, contact the administrator",
       });
     }
-    const userID = user._id
 
     const isMatch = await user.matchPassword(password);
 
     if (user && isMatch) {
-      const x = createJWT(res, user._id);
-      console.log("this is the cookie:", x)
-
+      createJWT(res, user._id);
       user.password = undefined;
 
       res.status(200).json(user);

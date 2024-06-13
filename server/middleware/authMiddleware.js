@@ -4,7 +4,6 @@ import User from "../models/user.js";
 
 const protectRoute = asyncHandler(async (req, res, next) => {
   let token = req.cookies.token;
-  console.log(token)
 
   if (token) {
     try {
@@ -13,6 +12,8 @@ const protectRoute = asyncHandler(async (req, res, next) => {
       const resp = await User.findById(decodedToken.userID).select(
         "isAdmin email"
       );
+
+      console.log(resp)
 
       req.user = {
         email: resp.email,
