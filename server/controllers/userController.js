@@ -59,7 +59,7 @@ export const loginUser = async (req, res) => {
         message: "User account has been deactivated, contact the administrator",
       });
     }
-    console.log(user._id)
+    const userID = user._id
 
     const isMatch = await user.matchPassword(password);
 
