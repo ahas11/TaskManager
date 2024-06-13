@@ -65,7 +65,7 @@ export const loginUser = async (req, res) => {
 
     if (user && isMatch) {
       const x = createJWT(res, user._id);
-      console.log(x)
+      console.log("this is the cookie:", x)
 
       user.password = undefined;
 
