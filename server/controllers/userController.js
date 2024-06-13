@@ -59,11 +59,13 @@ export const loginUser = async (req, res) => {
         message: "User account has been deactivated, contact the administrator",
       });
     }
+    console.log(user)
 
     const isMatch = await user.matchPassword(password);
 
     if (user && isMatch) {
-      createJWT(res, user._id);
+      const x = createJWT(res, user._id);
+      console.log(x)
 
       user.password = undefined;
 
