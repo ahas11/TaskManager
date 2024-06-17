@@ -142,7 +142,6 @@ const dashboard = () => {
 
   const totals = data?.tasks || {}; // Ensure totals is an object
 
-  console.log("This is the totals", totals)
   const stats = [
     {
       _id: "1",
@@ -173,8 +172,6 @@ const dashboard = () => {
       bg: "bg-[#be185d]",
     },
   ];
-
-  console.log("This is the totals", stats)
 
   const Card = ({ label, count, bg, icon }) => {
     return (

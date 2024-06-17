@@ -76,7 +76,7 @@ const Sidebar = () => {
     </Link>
   };
   return (
-    <div className='w-full h-full flex flex-col gap-6 p-5'>
+    <div className='w-full h-full flex flex-col gap-6 p-5 sm:h-full'>
       <h1 className='flex gap-1 items-center'>
         <p className='bg-blue-600 p-2 rounded-full'>
           <MdOutlineAddTask className='text-white text-2xl font-black' />
@@ -89,12 +89,6 @@ const Sidebar = () => {
             <NavLink el={link} key={link.label} />
           ))
         }
-      </div>
-      <div>
-        <button className='w-full flex gap-2 p-2 items-center text-lg text-gray-800'>
-          <MdSettings />
-          <span> Settings </span>
-        </button>
       </div>
     </div>
   )
