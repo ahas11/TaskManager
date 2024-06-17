@@ -100,12 +100,6 @@ const UserTable = ({ users }) => {
           </div>
         </div>
       </td>
-      <td>
-        <p className={clsx("w-fit px-3 py-1 rounded-full text-sm", user?.isActive ? "bg-blue-200" : "bg-yellow-100")}>
-          {user?.isActive ? "Active" : "Disabled"}
-          {console.log(user.isActive)}
-        </p>
-      </td>
       <td className='py-2 text-sm'>{moment(user?.createdAt).fromNow()}</td>
     </tr>
   );
