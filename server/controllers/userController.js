@@ -105,17 +105,17 @@ export const getTeamList = async (req, res) => {
 
 export const getNotificationsList = async (req, res) => {
   try {
-    const { userId } = req.user;
+    const { user } = req.user;
 
-    if (!userId) {
+    if (!user._id) {
       return res
         .status(400)
         .json({ status: false, message: "User ID not found" });
     }
 
     const notice = await Notice.find({
-      team: userId,
-      isRead: { $nin: [userId] },
+      team: user._id,
+      isRead: { $nin: [user._id] },
     }).populate("task", "title");
 
     // Log the results of the query
@@ -194,11 +194,11 @@ export const markNotificationRead = async (req, res) => {
 
 export const changeUserPassword = async (req, res) => {
   try {
-    const { userID } = req.user;
+    const { userId } = req.user;
 
-    const user = await User.findById(userID);
+    const user = await User.findById(userId);
 
-    console.log(user)
+    console.log(user._id)
 
     if (user) {
       user.password = req.body.password;
