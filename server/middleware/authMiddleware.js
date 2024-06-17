@@ -14,11 +14,13 @@ const protectRoute = asyncHandler(async (req, res, next) => {
       );
 
       console.log(resp)
+      console.log(decodedToken.userID)
+      console.log(decodedToken.userId)
 
       req.user = {
         email: resp.email,
         isAdmin: resp.isAdmin,
-        userID: decodedToken.userID,
+        userID: decodedToken.userId,
       };
 
       next();

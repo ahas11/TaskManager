@@ -107,15 +107,15 @@ export const getNotificationsList = async (req, res) => {
   try {
     const { user } = req.user;
 
-    if (!user._id) {
+    if (!user) {
       return res
         .status(400)
         .json({ status: false, message: "User ID not found" });
     }
 
     const notice = await Notice.find({
-      team: user._id,
-      isRead: { $nin: [user._id] },
+      team: user,
+      isRead: { $nin: [user] },
     }).populate("task", "title");
 
     // Log the results of the query
