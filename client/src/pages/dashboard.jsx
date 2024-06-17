@@ -153,7 +153,7 @@ const dashboard = () => {
     {
       _id: "2",
       label: "COMPLETED TASK",
-      total: totals["Completed"] || 0,
+      total: totals["completed"] || 0,
       icon: <MdAdminPanelSettings />,
       bg: "bg-[#0f766e]",
     },
