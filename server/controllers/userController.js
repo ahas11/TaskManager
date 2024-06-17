@@ -194,11 +194,12 @@ export const markNotificationRead = async (req, res) => {
 
 export const changeUserPassword = async (req, res) => {
   try {
-    const { userId } = req.user;
+    const { userID } = req.user;
 
-    const user = await User.findById(userId);
+    const user = await User.findById(userID);
 
-    console.log(user._id)
+    console.log(userID)
+    console.log(user)
 
     if (user) {
       user.password = req.body.password;
