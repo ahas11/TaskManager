@@ -130,15 +130,15 @@ export const getNotificationsList = async (req, res) => {
 
 export const updateUserProfile = async (req, res) => {
   try {
-    const { userId, isAdmin } = req.user;
+    const { userID, isAdmin } = req.user;
     const { _id } = req.body;
 
     const id =
-      isAdmin && userId === _id
-        ? userId
-        : isAdmin && userId !== _id
+      isAdmin && userID === _id
+        ? userID
+        : isAdmin && userID !== _id
         ? _id
-        : userId;
+        : userID;
 
     const user = await User.findById(id);
 
@@ -167,20 +167,20 @@ export const updateUserProfile = async (req, res) => {
 
 export const markNotificationRead = async (req, res) => {
   try {
-    const { userId } = req.user;
+    const { userID } = req.user;
 
     const { isReadType, id } = req.query;
 
     if (isReadType === "all") {
       await Notice.updateMany(
-        { team: userId, isRead: { $nin: [userId] } },
-        { $push: { isRead: userId } },
+        { team: userID, isRead: { $nin: [userID] } },
+        { $push: { isRead: userID } },
         { new: true }
       );
     } else {
       await Notice.findOneAndUpdate(
-        { _id: id, isRead: { $nin: [userId] } },
-        { $push: { isRead: userId } },
+        { _id: id, isRead: { $nin: [userID] } },
+        { $push: { isRead: userID } },
         { new: true }
       );
     }
