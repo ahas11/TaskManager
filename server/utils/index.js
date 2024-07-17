@@ -18,8 +18,10 @@ export const createJWT = (res, userId) => {
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: true, // Use secure cookies in production
+    secure: process.env.NODE_ENV === "production", // Use secure cookies in production
     sameSite: "none", // Prevent CSRF attacks
-    maxAge: 1 * 24 * 60 * 60 * 1000, // 1 days
+    maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
   });
+
+  console.log("Token set in cookie:", token); // Debugging line
 };
