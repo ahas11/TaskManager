@@ -99,7 +99,6 @@ const UserTable = ({ users }) => {
           </div>
         </div>
       </td>
-      <td className='py-2 text-sm'>{moment(user?.createdAt).fromNow()}</td>
     </tr>
   );
 
