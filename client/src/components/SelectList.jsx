@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 import { BsChevronExpand } from "react-icons/bs";
 import { MdCheck } from "react-icons/md";
 
+//this is for selecting from a list
 const SelectList = ({lists, selected, setSelected, label}) => {
   return (
     <div className='w-full'>
