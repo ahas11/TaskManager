@@ -18,10 +18,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
       "https://ataskmanager.netlify.app",
-      "https://66611170721e7c2a1497c5f4--ataskmanager.netlify.app",
       "https://taskmanager-5c7k.onrender.com"
     ],
     methods: ["GET", "POST", "DELETE", "PUT"],
@@ -30,7 +27,7 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://ataskmanager.netlify.app"); // Adjust "*" to a specific domain if needed
+  res.header("Access-Control-Allow-Origin", "https://ataskmanager.netlify.app");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
