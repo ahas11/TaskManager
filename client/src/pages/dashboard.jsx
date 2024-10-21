@@ -40,7 +40,7 @@ const TaskTable = ({ tasks }) => {
       <td className="py-2">
         <div className="flex gap-1 items-center">
           <span className={clsx("text-lg", PRIOTITYSTYLES[task.priority])}>{ICONS[task.priority]}</span>
-          <span className="capitalize">{task.priority}</span>
+          <span className="capitalize">{task?.priority || 'low'}</span>
         </div>
       </td>
       <td className="py-2">
