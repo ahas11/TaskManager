@@ -30,7 +30,11 @@ const AddTask = ({ open, setOpen, task }) => {
 
   const [team, setTeam] = useState(task?.team || []);
   const [stage, setStage] = useState(task?.stage ? task.stage.toUpperCase() : LISTS[0]);
-  const [priority, setPriority] = useState(task?.priority ? task.priority.toUpperCase() : PRIORITY[2]);
+  const [priority, setPriority] = useState(
+    task?.priority ? task.priority.toUpperCase() : PRIORITY[2]
+  );
+
+  console.log('Task priority:', task?.priority);
   
   const [assets, setAssets] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -38,6 +42,8 @@ const AddTask = ({ open, setOpen, task }) => {
   const [createTask, { isLoading }] = useCreateTaskMutation();
   const [updateTask, { isLoading: usUpdating }] = useUpdateTaskMutation();
   const URLS = task?.assets ? [...task.assets] : [];
+
+  console.log('Task priority:', task?.priority);
 
   const {
     register,
@@ -57,6 +63,8 @@ const AddTask = ({ open, setOpen, task }) => {
         setUploading(false);
       }
     }
+
+    console.log('Task priority:', task?.priority);
 
     try {
       const newData = {
