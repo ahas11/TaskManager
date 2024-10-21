@@ -158,9 +158,11 @@ const UserTable = ({ users }) => {
 
 const dashboard = () => {
   const { data, isLoading, error } = useGetDasboardStatsQuery();
+  
+  // Log the fetched data for debugging
+  console.log('Fetched Data:', data);
 
-  console.log("Fetched Data:", data); // Log the fetched data for debugging
-
+  // Handle loading state
   if (isLoading) {
     return (
       <div className="py-10">
@@ -169,11 +171,18 @@ const dashboard = () => {
     );
   }
 
+  // Handle error state
   if (error) {
-    return <div>Error: {error.message}</div>; // Handle the error
+    return <div>Error: {error.message}</div>;
   }
 
-  const totals = data?.tasks || {}; // Ensure totals is an object
+  // Check if the data exists before rendering
+  if (!data || !data.last10Task || !data.users) {
+    return <div>Loading or no data available...</div>;
+  }
+
+  // Data is available at this point, so you can now render safely
+  const totals = data?.tasks || {};
 
   const stats = [
     {
@@ -206,24 +215,27 @@ const dashboard = () => {
     },
   ];
 
-  const Card = ({ label, count, bg, icon }) => {
-    return (
-      <div className="w-full h-32 bg-white p-5 shadow-md rounded-md flex items-center justify-between">
-        <div className="h-full flex flex-1 flex-col justify-between">
-          <p className="text-base text-gray-600">{label}</p>
-          <span className="text-2xl font-semibold">{count}</span>
-        </div>
-        <div
-          className={clsx(
-            "w-10 h-10 rounded-full flex items-center justify-center text-white",
-            bg
-          )}
-        >
-          {icon}
-        </div>
+  return (
+    <div className="h-full py-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+        {stats.map(({ icon, bg, label, total }, index) => (
+          <Card key={index} icon={icon} bg={bg} label={label} count={total} />
+        ))}
       </div>
-    );
-  };
+      <div className="w-full bg-white my-16 p-4 rounded shadow-sm">
+        <h4 className="text-xl text-gray-600 font-semibold">Chart by priority</h4>
+        {/* Ensure data is available before rendering the chart */}
+        <Chart data={data?.graphData || []} />
+      </div>
+      <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
+        {/* Ensure data exists before rendering TaskTable and UserTable */}
+        <TaskTable tasks={data?.last10Task || []} />
+        <UserTable users={data?.users || []} />
+      </div>
+    </div>
+  );
+};
+
 
   return (
     <div className="h-full py-4">
