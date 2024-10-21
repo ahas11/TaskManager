@@ -237,28 +237,4 @@ const dashboard = () => {
 };
 
 
-  return (
-    <div className="h-full py-4">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-        {stats.map(({ icon, bg, label, total }, index) => (
-          <Card key={index} icon={icon} bg={bg} label={label} count={total} />
-        ))}
-      </div>
-      <div className="w-full bg-white my-16 p-4 rounded shadow-sm">
-        <h4 className="text-xl text-gray-600 font-semibold">
-          Chart by priority
-        </h4>
-        <Chart data={data?.graphData || []} />{" "}
-        {/* Ensure data is not undefined */}
-      </div>
-      <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
-        <TaskTable tasks={data?.last10Task || []} />{" "}
-        {/* Ensure data is not undefined */}
-        <UserTable users={data?.users || []} />{" "}
-        {/* Ensure data is not undefined */}
-      </div>
-    </div>
-  );
-};
-
 export default dashboard;
