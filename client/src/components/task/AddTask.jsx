@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import ModelWrapper from '../ModelWrapper'
 import { Dialog } from '@headlessui/react'
 import { useForm } from "react-hook-form";
-import { tasks } from '../../assets/data';
 import Textbox from "../Textbox"
 import UserList from './UserList';
 import SelectList from '../SelectList';
@@ -30,10 +29,9 @@ const AddTask = ({ open, setOpen, task }) => {
   };
 
   const [team, setTeam] = useState(task?.team || []);
-  const [stage, setStage] = useState(task?.stage?.toUpperCase() || LISTS[0]);
-  const [priority, setPriority] = useState(
-    task?.priority?.toUpperCase() || PRIORITY[2]
-  );
+  const [stage, setStage] = useState(task?.stage ? task.stage.toUpperCase() : LISTS[0]);
+  const [priority, setPriority] = useState(task?.priority ? task.priority.toUpperCase() : PRIORITY[2]);
+  
   const [assets, setAssets] = useState([]);
   const [uploading, setUploading] = useState(false);
 
