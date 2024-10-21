@@ -30,7 +30,7 @@ const AddTask = ({ open, setOpen, task }) => {
 
   const [team, setTeam] = useState(task?.team || []);
   const [stage, setStage] = useState(task?.stage ? task.stage.toUpperCase() : LISTS[0]);
-  const [priority, setPriority] = useState(task?.priority ? task.priority.toUpperCase() : PRIORITY[2]);
+  const [priority, setPriority] = useState(task?.priority ? task.priority.toUpperCase() : PRIORITY[2]);  
   
   const [assets, setAssets] = useState([]);
   const [uploading, setUploading] = useState(false);
