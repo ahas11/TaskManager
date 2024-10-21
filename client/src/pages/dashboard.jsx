@@ -34,70 +34,81 @@ const TaskTable = ({ tasks }) => {
     </thead>
   );
 
-  const TableRow = ({ task }) => (
-    <tr className="border-b border-gray-300 text-gray-600 hover:bg-gray-300/10">
-      <td className="py-2">
-        <div className="flex items-center gap-2">
-          <div
-            className={clsx(
-              "w-4 h-4 rounded-full",
-              TASK_TYPE[task?.stage || "todo"]
+  const TableRow = ({ task }) => {
+    // Add more logs to verify task structure
+    console.log("Task details: ", task);
+
+    return (
+      <tr className="border-b border-gray-300 text-gray-600 hover:bg-gray-300/10">
+        <td className="py-2">
+          <div className="flex items-center gap-2">
+            <div
+              className={clsx(
+                "w-4 h-4 rounded-full",
+                TASK_TYPE[task?.stage || "todo"]
+              )}
+            />
+            <p className="text-base text-black">
+              {task?.title || "Untitled Task"}
+            </p>
+          </div>
+        </td>
+        <td className="py-2">
+          <div className="flex gap-1 items-center">
+            <span
+              className={clsx(
+                "text-lg",
+                PRIOTITYSTYLES[task?.priority || "low"]
+              )}
+            >
+              {ICONS[task?.priority || "low"]}
+            </span>
+            <span className="capitalize">
+              {typeof task?.priority === "string" && task.priority
+                ? task.priority.toUpperCase()
+                : "LOW"}
+            </span>
+          </div>
+        </td>
+        <td className="py-2">
+          <div className="flex">
+            {task?.team?.length ? (
+              task.team.map((m, index) => (
+                <div
+                  key={index}
+                  className={clsx(
+                    "w-7 h-7 rounded-full text-white flex items-center justify-center text-sm -mr-1",
+                    BGS[index % BGS.length]
+                  )}
+                >
+                  <UserInfo user={m} />
+                </div>
+              ))
+            ) : (
+              <span>No team assigned</span>
             )}
-          />
-          <p className="text-base text-black">
-            {task?.title || "Untitled Task"}
-          </p>
-        </div>
-      </td>
-      <td className="py-2">
-        <div className="flex gap-1 items-center">
-          <span
-            className={clsx("text-lg", PRIOTITYSTYLES[task?.priority || "low"])}
-          >
-            {ICONS[task?.priority || "low"]}
+          </div>
+        </td>
+        <td className="py-2 hidden md:block">
+          <span className="text-base text-gray-600">
+            {task?.date ? moment(task?.date).fromNow() : "No date"}
           </span>
-          <span className="capitalize">
-            {typeof task?.priority === "string"
-              ? task.priority.toUpperCase()
-              : "LOW"}
-          </span>
-        </div>
-      </td>
-      <td className="py-2">
-        <div className="flex">
-          {task?.team?.length ? (
-            task.team.map((m, index) => (
-              <div
-                key={index}
-                className={clsx(
-                  "w-7 h-7 rounded-full text-white flex items-center justify-center text-sm -mr-1",
-                  BGS[index % BGS.length]
-                )}
-              >
-                <UserInfo user={m} />
-              </div>
-            ))
-          ) : (
-            <span>No team assigned</span>
-          )}
-        </div>
-      </td>
-      <td className="py-2 hidden md:block">
-        <span className="text-base text-gray-600">
-          {moment(task?.date).fromNow()}
-        </span>
-      </td>
-    </tr>
-  );
+        </td>
+      </tr>
+    );
+  };
 
   return (
     <div className="w-full md:w-2/3 bg-white px-2 md:px-4 pt-4 pb-4 rounded shadow-md">
       <table className="w-full">
         <TableHeader />
         <tbody>
-          {(tasks?.length > 0 &&
-            tasks.map((task, id) => <TableRow key={id} task={task} />)) || (
-            <p>No tasks available</p>
+          {tasks?.length > 0 ? (
+            tasks.map((task, id) => <TableRow key={id} task={task || {}} />)
+          ) : (
+            <tr>
+              <td colSpan={4}>No tasks available</td>
+            </tr>
           )}
         </tbody>
       </table>
