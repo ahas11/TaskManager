@@ -9,7 +9,7 @@ export default defineConfig({
     port:3000,
     proxy: {
       "/api": {
-        target: "htto://localhost:8800",
+        target: "https://taskmanager-5c7k.onrender.com",
         changeOrigin: true,
       }
     }
