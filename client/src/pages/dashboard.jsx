@@ -41,7 +41,7 @@ const TaskTable = ({ tasks }) => {
     }
   
     // Ensure title exists before rendering
-    const taskTitle = task.title ? task.title.toUpperCase() : "UNKNOWN TITLE";
+    const taskTitle = task.title ? task.title : "UNKNOWN TITLE";
   
     return (
       <tr className="border-b border-gray-300 text-gray-600 hover:bg-gray-300/10">
@@ -77,7 +77,7 @@ const TaskTable = ({ tasks }) => {
       </tr>
     );
   };
-  
+
   return (
     <div className="w-full md:w-2/3 bg-white px-2 md:px-4 pt-4 pb-4 rounded shadow-md">
       <table className="w-full">
