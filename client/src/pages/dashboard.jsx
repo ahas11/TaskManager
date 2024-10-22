@@ -29,22 +29,27 @@ const TaskTable = ({ tasks }) => {
     </thead>
   );
 
-  const TableRow = ({ task }) => {
-    // Add console log to check the task data
+    const TableRow = ({ task }) => {
+    // Add console log to check the task data and task priority
     console.log("Task Data:", task);
-
+    console.log("Task Priority:", task?.priority ? task.priority : "Priority is missing");
+  
     // Check if task priority exists
     if (!task?.priority) {
       console.log("Task priority is missing for task:", task);
       return null; // Skip rendering this row if priority is not present
     }
-
+  
+    // Ensure title exists before rendering
+    const taskTitle = task.title ? task.title.toUpperCase() : "UNKNOWN TITLE";
+  
     return (
       <tr className="border-b border-gray-300 text-gray-600 hover:bg-gray-300/10">
         <td className="py-2">
           <div className="flex items-center gap-2">
             <div className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])} />
-            <p className="text-base text-black">{task.title}</p>
+            {/* Ensure title exists */}
+            <p className="text-base text-black">{taskTitle}</p>
           </div>
         </td>
         <td className="py-2">
@@ -72,7 +77,7 @@ const TaskTable = ({ tasks }) => {
       </tr>
     );
   };
-
+  
   return (
     <div className="w-full md:w-2/3 bg-white px-2 md:px-4 pt-4 pb-4 rounded shadow-md">
       <table className="w-full">
