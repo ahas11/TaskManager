@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ModelWrapper from '../ModelWrapper'
 import { Dialog } from '@headlessui/react'
 import { useForm } from "react-hook-form";
+import { tasks } from '../../assets/data';
 import Textbox from "../Textbox"
 import UserList from './UserList';
 import SelectList from '../SelectList';
